@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduardo Olsen · Agencia creativa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* RESET Y BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fcfcfc; color: #121212; line-height: 1.4;
+        }
+        h1, h2, h3, h4, .logo, .btn, .nav-links a { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+        img { display: block; max-width: 100%; height: auto; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+        /* HEADER FIJO */
+        header {
+            position: fixed; width: 100%; top: 0; left: 0; background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02); z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.02);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+        .logo { font-weight: 700; font-size: 1.7rem; letter-spacing: -0.02em; background: linear-gradient(135deg, #1e2b5e, #2b3b7a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo span { font-weight: 300; color: #4b5b9b; -webkit-text-fill-color: #4b5b9b; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: #2d2d2d; transition: color 0.2s; }
+        .nav-links a:hover { color: #2b3b7a; }
+        .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #1e2b5e; }
+
+        /* BOTONES */
+        .btn {
+            display: inline-block; padding: 12px 32px; border-radius: 50px; font-weight: 600;
+            transition: all 0.3s ease; border: none; cursor: pointer; font-size: 0.95rem;
+            background: #1e2b5e; color: white; box-shadow: 0 8px 20px -6px rgba(30,43,94,0.3);
+        }
+        .btn-outline { background: transparent; border: 2px solid #1e2b5e; color: #1e2b5e; box-shadow: none; }
+        .btn:hover { transform: translateY(-3px); background: #2b3b7a; box-shadow: 0 12px 24px -8px #1e2b5e; }
+        .btn-outline:hover { background: #1e2b5e; color: white; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px;
+            background: radial-gradient(circle at 80% 30%, #f0f3fe, #ffffff);
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; }
+        .hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #0e1b3c; margin-bottom: 24px; }
+        .hero-highlight { background: linear-gradient(120deg, #1e2b5e, #5469b4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.2rem; color: #3a3f5e; margin-bottom: 32px; max-width: 90%; }
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-media { border-radius: 24px; overflow: hidden; box-shadow: 0 30px 40px -20px rgba(0,0,0,0.3); background: #e6eaf5; }
+
+        /* SECCIONES GENERALES */
+        section { padding: 96px 0; scroll-margin-top: 72px; }
+        .section-title { font-size: 2.5rem; font-weight: 700; color: #0e1b3c; margin-bottom: 16px; letter-spacing: -0.02em; }
+        .section-subtitle { color: #4a4f6b; margin-bottom: 48px; font-size: 1.2rem; border-left: 5px solid #1e2b5e; padding-left: 18px; }
+
+        /* SERVICIOS CARDS */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+        .service-card {
+            background: white; padding: 32px 24px; border-radius: 28px; box-shadow: 0 20px 35px -12px rgba(0,0,0,0.03);
+            transition: all 0.25s; border: 1px solid #f0f0f5; text-align: center;
+        }
+        .service-card:hover { transform: scale(1.02); border-color: #c7d0f0; box-shadow: 0 25px 30px -14px rgba(30,43,94,0.12); }
+        .service-icon { width: 70px; height: 70px; background: #e9edfc; border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .service-card h3 { margin-bottom: 12px; color: #1a254a; }
+
+        /* PORTFOLIO GRID */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .portfolio-item { 
+            border-radius: 24px; overflow: hidden; background: #f2f4fb; transition: 0.2s; cursor: pointer;
+        }
+        .portfolio-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; transition: transform 0.6s; }
+        .portfolio-item:hover img { transform: scale(1.03); }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: 300;
+            z-index: 2001;
+        }
+        .lightbox-close:hover {
+            color: #ccc;
+        }
+
+        /* BLOG CARDS */
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .blog-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 24px -12px rgba(0,0,0,0.05); }
+        .blog-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .blog-content { padding: 20px; }
+        .blog-category { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #1e2b5e; font-weight: 600; margin-bottom: 8px; }
+        .blog-content h4 { font-size: 1.2rem; margin-bottom: 8px; }
+        .blog-content p { color: #3b405b; font-size: 0.9rem; }
+
+        /* SOBRE NOSOTROS */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-img { border-radius: 32px; background: #dadef0; aspect-ratio: 1/1.1; object-fit: cover; }
+
+        /* TESTIMONIOS */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .testimonial-card { background: white; border-radius: 32px; padding: 32px; box-shadow: 0 15px 30px -12px rgba(0,0,0,0.05); }
+        .testimonial-card p { font-style: italic; margin: 16px 0; color: #292d42; }
+        .testimonial-author { font-weight: 600; color: #0b1533; }
+
+        /* CONTACTO */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .form-group { margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 18px; border-radius: 40px; border: 1px solid #dbdeed; font-family: inherit; font-size: 1rem; background: white; }
+        textarea { border-radius: 28px; resize: vertical; }
+        .contact-info { background: #f2f5ff; padding: 32px; border-radius: 40px; }
+        .social-links { display: flex; gap: 20px; margin-top: 30px; }
+        .social-links a { font-size: 1.8rem; color: #1e2b5e; transition: 0.1s; }
+
+        /* FOOTER */
+        footer { background: #0b1126; color: #cfd6f0; padding: 48px 0 32px; border-top: 1px solid #1e274a; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; }
+        .footer-col p { margin: 20px 0; color: #a8b2da; }
+        .footer-links li { list-style: none; margin-bottom: 12px; }
+        .footer-links a { color: #cfd6f0; transition: color 0.2s; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { text-align: center; padding-top: 48px; margin-top: 48px; border-top: 1px solid #1f284e; }
+
+        /* ADMIN LINK */
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #17b60c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .admin-link:hover {
+            background: #17b60c;
+            transform: translateY(-2px);
+        }
+
+        /* LAZY LOAD / POSTER / PRELOAD */
+        .poster-video { background: #cfd6ec; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .nav-links { display: none; position: absolute; top: 72px; left: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); flex-direction: column; padding: 24px; gap: 1.5rem; border-bottom: 1px solid #ddd; }
+            .nav-links.active { display: flex; }
+            .nav-toggle { display: block; }
+            .hero-grid, .about-grid, .contact-grid, .footer-grid { grid-template-columns: 1fr; }
+            .portfolio-grid, .blog-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .portfolio-grid, .blog-grid, .testimonials-grid { grid-template-columns: 1fr; }
+        }
+        /* animaciones suaves */
+        .fade-up { animation: fadeUp 0.6s ease forwards; }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">eduardo<span>olsen</span></div>
+            <button class="nav-toggle" id="navToggle" aria-label="menu">☰</button>
+            <nav class="nav-links" id="navLinks">
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#portafolio">Portafolio</a>
+                <a href="#blog">Blog</a>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#testimonios">Testimonios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section id="inicio" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content fade-up">
+                    <h1>Marketing digital, <span class="hero-highlight">diseño y video</span> que venden</h1>
+                    <p>Convertimos ideas en impacto. Estrategia, creatividad y producción audiovisual con la visión de Eduardo Olsen.</p>
+                    <div class="hero-btns">
+                        <a href="#contacto" class="btn">Solicitar cotización</a>
+                        <a href="#portafolio" class="btn btn-outline">Ver casos</a>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <!-- video diferido con poster y preload="none" -->
+                    <video width="100%" preload="none" poster="https://picsum.photos/id/1043/800/600" loading="lazy" loop muted playsinline>
+                        <source src="#" type="video/mp4"> <!-- recurso opcional, se ve poster -->
+                        Tu navegador no soporta video.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios">
+            <div class="container">
+                <h2 class="section-title">Servicios · expertise</h2>
+                <div class="section-subtitle">Lo que hacemos, cómo lo hacemos.</div>
+                <div class="services-grid">
+                    <div class="service-card"><div class="service-icon">📈</div><h3>Marketing digital</h3><p>Estrategias data-driven, ads, social media y embudos de conversión.</p></div>
+                    <div class="service-card"><div class="service-icon">🎨</div><h3>Diseño gráfico</h3><p>Identidad visual, branding, piezas digitales y offline de alto impacto.</p></div>
+                    <div class="service-card"><div class="service-icon">🎬</div><h3>Producción video</h3><p>Reels, spots, animación y edición con narrativa que vende.</p></div>
+                    <div class="service-card"><div class="service-icon">🧠</div><h3>Branding · Estrategia</h3><p>Construimos marcas memorables y con personalidad única.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTAFOLIO / CASOS DE ÉXITO -->
+        <section id="portafolio">
+            <div class="container">
+                <h2 class="section-title">Casos de éxito</h2>
+                <div class="section-subtitle">Proyectos que marcan la diferencia.</div>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/20/600/400" alt="campaña digital" loading="lazy" width="600" height="400"></div>
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/26/600/400" alt="produccion video" loading="lazy" width="600" height="400"></div>
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/30/600/400" alt="branding" loading="lazy" width="600" height="400"></div>
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/45/600/400" alt="diseño grafico" loading="lazy" width="600" height="400"></div>
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/52/600/400" alt="reels" loading="lazy" width="600" height="400"></div>
+                    <div class="portfolio-item"><img src="https://picsum.photos/id/65/600/400" alt="estrategia digital" loading="lazy" width="600" height="400"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG -->
+        <section id="blog">
+            <div class="container">
+                <h2 class="section-title">Blog · Perspectiva</h2>
+                <div class="section-subtitle">Marketing, Diseño, Video, Estrategia.</div>
+                <div class="blog-grid">
+                    <article class="blog-card"><img src="https://picsum.photos/id/0/500/300" loading="lazy" alt="marketing trends"><div class="blog-content"><div class="blog-category">Marketing</div><h4>Tendencias 2025 en video marketing</h4><p>El poder del contenido efímero y la IA.</p></div></article>
+                    <article class="blog-card"><img src="https://picsum.photos/id/42/500/300" loading="lazy" alt="diseño"><div class="blog-content"><div class="blog-category">Diseño</div><h4>Psicología del color en branding</h4><p>Cómo elegir paletas que conectan.</p></div></article>
+                    <article class="blog-card"><img src="https://picsum.photos/id/104/500/300" loading="lazy" alt="video"><div class="blog-content"><div class="blog-category">Video</div><h4>Reels que enganchan: la nueva fórmula</h4><p>storytelling vertical para redes.</p></div></article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE NOSOTROS + Eduardo Olsen -->
+        <section id="nosotros">
+            <div class="container about-grid">
+                <div><img src="https://picsum.photos/id/64/700/800" loading="lazy" class="about-img" alt="Eduardo Olsen director creativo"></div>
+                <div><h2 class="section-title" style="margin-bottom:0.2rem">Eduardo Olsen</h2><p style="color:#1e2b5e; font-weight:500;">Fundador · director creativo</p><p style="margin: 24px 0;">Con más de 15 años creando campañas para marcas globales, Eduardo lidera un equipo apasionado por contar historias que venden. Nuestra agencia nació para romper lo convencional: integramos marketing, diseño y video en experiencias memorables.</p><a href="#contacto" class="btn">Hablemos de tu proyecto</a></div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIOS -->
+        <section id="testimonios">
+            <div class="container">
+                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card"><p>“Eduardo y su equipo transformaron nuestra presencia digital. Los vídeos corporativos son espectaculares.”</p><div class="testimonial-author">— Laura Méndez, CMO de InnovaCorp</div></div>
+                    <div class="testimonial-card"><p>“Creatividad, estrategia y cercanía. Cada campaña supera objetivos. 100% recomendados.”</p><div class="testimonial-author">— Roberto Suárez, fundador de ZonaFit</div></div>
+                    <div class="testimonial-card"><p>“El diseño y los reels para redes nos hicieron virales. Captan justo la esencia de nuestra marca.”</p><div class="testimonial-author">— Carla Vicente, directora de Arte Moda</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <div class="container contact-grid">
+                <div><h2 class="section-title">Hablemos</h2><p class="section-subtitle" style="margin-bottom:30px;">Cuéntanos tu idea, te ayudamos a ejecutarla.</p>
+                    <form id="contactForm"><div class="form-group"><input type="text" placeholder="Nombre completo" required></div><div class="form-group"><input type="email" placeholder="Email profesional" required></div><div class="form-group"><textarea rows="4" placeholder="¿En qué podemos ayudarte?"></textarea></div><button type="submit" class="btn">Enviar mensaje</button><p id="formFeedback" style="margin-top:1rem; color:#1e2b5e;"></p></form>
+                </div>
+                <div class="contact-info"><h3 style="margin-bottom:24px;">O si lo prefieres</h3><p>📧 olsen@logiclookcr.com</p><p>📞 +506 89532623</p><p>📍 Costa Rica · remoto</p><div class="social-links"><a href="#" aria-label="Linkedin">🔗</a><a href="#" aria-label="Instagram">📸</a><a href="#" aria-label="Behance">🎨</a><a href="#" aria-label="Vimeo">🎥</a></div></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col"><div class="logo" style="color:white; -webkit-text-fill-color:white;">eduardo<span style="color:#7f8ed6;">olsen</span></div><p>Agencia creativa de marketing, diseño y video.</p></div>
+            <div class="footer-col"><h4>Enlaces rápidos</h4><ul class="footer-links"><li><a href="#servicios">Servicios</a></li><li><a href="#portafolio">Portafolio</a></li><li><a href="#nosotros">Nosotros</a></li></ul></div>
+            <div class="footer-col"><h4>Blog</h4><ul class="footer-links"><li><a href="#">Marketing</a></li><li><a href="#">Diseño</a></li><li><a href="#">Video</a></li><li><a href="#">Estrategia</a></li></ul></div>
+            <div class="footer-col"><h4>Redes</h4><ul class="footer-links"><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">YouTube</a></li></ul></div>
+        </div>
+        <div class="container footer-bottom">© 2026 eduardo olsen creative studio. Todos los derechos reservados.</div>
+    </footer>
+
+    <a href="https://wa.me/50689532623?text=Hola%20Eduardo,%20me%20gustaría%20recibir%20información%20sobre%20sus%20servicios" class="admin-link" target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <!-- JavaScript no bloqueante, vanilla -->
+    <script>
+        (function() {
+            // header toggle mobile
+            const navToggle = document.getElementById('navToggle');
+            const navLinks = document.getElementById('navLinks');
+            if (navToggle) {
+                navToggle.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+            }
+            // cerrar menú al hacer click en un link (mobile)
+            navLinks?.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 900) navLinks.classList.remove('active');
+                });
+            });
+
+            // formulario feedback sin recargar
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const feedback = document.getElementById('formFeedback');
+                    feedback.textContent = '¡Gracias! Te contactaremos en breve.';
+                    form.reset();
+                    setTimeout(() => { feedback.textContent = ''; }, 4000);
+                });
+            }
+
+            // Lazy loading en video (poster ya está, aseguramos preload)
+            document.querySelectorAll('video').forEach(v => v.setAttribute('preload', 'none'));
+
+            // scroll con offset para header fijo
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === "#" || href === "") return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const offset = 80;
+                        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // LIGHTBOX para imágenes del portafolio
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+            
+            // Agregar click a todas las imágenes del portafolio
+            document.querySelectorAll('.portfolio-item img').forEach(img => {
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    lightboxImg.src = this.src;
+                    lightbox.classList.add('active');
+                });
+            });
+
+            // Cerrar lightbox al hacer click en la X o fuera de la imagen
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+
+            // Cerrar con tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        })();
+    </script>
+   </body>
+</html>
