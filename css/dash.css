@@ -764,125 +764,189 @@
             gap: 10px;
         }
 
-        /* Botón flotante */
-        .fab-categorias {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1e2b5e;
-            color: white;
-            border: none;
-            padding: 16px 28px;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(30,43,94,0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
+       .fab-categorias {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1e2b5e;
+    color: white;
+    border: none;
+    padding: 16px 28px;
+    border-radius: 60px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(30,43,94,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
 
-        .fab-categorias:hover {
-            background: #2b3b7a;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(30,43,94,0.4);
-        }
+.fab-categorias:hover {
+    background: #2b3b7a;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(30,43,94,0.4);
+}
 
-        .fab-categorias i {
-            font-size: 1.2rem;
-        }
+.fab-categorias i {
+    font-size: 1.2rem;
+}
 
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .config-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+       /* Desktop: FAB con texto visible */
+@media (min-width: 769px) {
+    .fab-categorias {
+        width: auto;
+        padding: 0 25px;
+        gap: 10px;
+    }
+    .fab-categorias span {
+        display: inline;
+    }
+}
 
-        @media (max-width: 900px) {
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                transform: translateX(-100%);
-                z-index: 1000;
-                box-shadow: 2px 0 20px rgba(0,0,0,0.1);
-            }
+/* Tablets y móviles grandes */
+@media (max-width: 900px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-100%);
+        width: 280px;
+        height: 100vh;
+        height: 100dvh; /* Para móviles modernos */
+        z-index: 1000;
+        box-shadow: 2px 0 20px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+    }
 
-            .sidebar.active {
-                transform: translateX(0);
-            }
+    .sidebar.active {
+        transform: translateX(0);
+    }
 
-            .menu-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+    .sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 20px;
+    }
 
-            .main-content {
-                max-width: 100%;
-            }
+    .user-info {
+        margin-top: auto;
+        padding: 20px;
+        background: #0b1126; /* Mantener color del sidebar */
+        border-top: 1px solid #1f284e;
+    }
 
-            .top-bar h1 {
-                font-size: 1.4rem;
-            }
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #1e2b5e;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
+    .menu-toggle:hover {
+        background: #f0f3fe;
+    }
 
-        @media (max-width: 600px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+    .main-content {
+        max-width: 100%;
+    }
 
-            .section-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
+    .top-bar {
+        padding: 15px 20px;
+    }
 
-            .btn-add-item {
-                width: 100%;
-                justify-content: center;
-            }
+    .top-bar h1 {
+        font-size: 1.4rem;
+    }
+}
 
-            .blog-posts-grid {
-                grid-template-columns: 1fr;
-            }
+/* Móviles pequeños */
+@media (max-width: 600px) {
+    .sidebar {
+        width: 85%; /* Ocupa el 85% en móviles muy pequeños */
+        max-width: 300px;
+    }
 
-            .modal-content {
-                width: 95%;
-                margin: 20px;
-            }
+    .user-info {
+        padding: 15px;
+    }
 
-            .modal-header {
-                padding: 20px 24px;
-            }
+    .user-avatar i {
+        font-size: 2rem;
+    }
 
-            .modal-body {
-                padding: 24px;
-            }
+    .user-name {
+        font-size: 0.9rem;
+    }
 
-            .form-actions {
-                flex-direction: column;
-            }
+    .user-role {
+        font-size: 0.75rem;
+    }
 
-            .form-actions button {
-                width: 100%;
-            }
+    .btn-logout {
+        font-size: 1rem;
+    }
 
-            .fab-categorias {
-                bottom: 20px;
-                right: 20px;
-                padding: 14px 20px;
-                font-size: 0.9rem;
-            }
-        }
+    .top-bar {
+        padding: 12px 16px;
+    }
+
+    .top-bar h1 {
+        font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+    }
+
+    /* Ajustes para el FAB en móviles */
+    .fab-categorias {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        border-radius: 50px;
+    }
+
+    .fab-categorias i {
+        font-size: 1rem;
+    }
+}
+
+/* Soporte para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .sidebar {
+        width: 90%;
+    }
+
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .user-avatar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .btn-logout {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        padding: 8px;
+    }
+}
