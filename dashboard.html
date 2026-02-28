@@ -71,13 +71,13 @@
                     
                     <div class="form-group">
                         <label for="blogTitulo">Título del post</label>
-                        <input type="text" id="blogTitulo" required placeholder="Ej: Tendencias de marketing 2025">
+                        <input type="text" id="blogTitulo" class="form-control" required placeholder="Ej: Tendencias de marketing 2025">
                     </div>
                     
                     <div class="form-row">
                         <div class="form-group">
                             <label for="blogCategoria">Categoría</label>
-                            <select id="blogCategoria" required>
+                            <select id="blogCategoria" class="form-control" required>
                                 <option value="">Seleccionar categoría</option>
                                 <option value="Marketing">📈 Marketing</option>
                                 <option value="Diseño">🎨 Diseño</option>
@@ -88,18 +88,18 @@
                         
                         <div class="form-group">
                             <label for="blogImagen">URL de imagen</label>
-                            <input type="url" id="blogImagen" placeholder="https://ejemplo.com/imagen.jpg">
+                            <input type="url" id="blogImagen" class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="blogExtracto">Extracto</label>
-                        <textarea id="blogExtracto" rows="3" required placeholder="Breve descripción del post..."></textarea>
+                        <textarea id="blogExtracto" rows="3" class="form-control" required placeholder="Breve descripción del post..."></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="blogContenido">Contenido</label>
-                        <textarea id="blogContenido" rows="6" placeholder="Contenido completo del artículo..."></textarea>
+                        <textarea id="blogContenido" rows="6" class="form-control" placeholder="Contenido completo del artículo..."></textarea>
                     </div>
                     
                     <div class="form-actions">
@@ -124,22 +124,135 @@
                     
                     <div class="form-group">
                         <label for="portfolioTitulo">Título del proyecto</label>
-                        <input type="text" id="portfolioTitulo" required placeholder="Ej: Campaña Digital - Nike">
+                        <input type="text" id="portfolioTitulo" class="form-control" required placeholder="Ej: Campaña Digital - Nike">
                     </div>
                     
                     <div class="form-group">
                         <label for="portfolioDescripcion">Descripción</label>
-                        <textarea id="portfolioDescripcion" rows="3" required placeholder="Breve descripción del proyecto..."></textarea>
+                        <textarea id="portfolioDescripcion" rows="3" class="form-control" required placeholder="Breve descripción del proyecto..."></textarea>
                     </div>
                     
                     <div class="form-group">
                         <label for="portfolioImagen">URL de imagen</label>
-                        <input type="url" id="portfolioImagen" placeholder="https://ejemplo.com/imagen.jpg">
+                        <input type="url" id="portfolioImagen" class="form-control" placeholder="https://ejemplo.com/imagen.jpg">
                     </div>
                     
                     <div class="form-actions">
                         <button type="button" class="btn-cancel" onclick="closeModal('portfolioModal')">Cancelar</button>
                         <button type="submit" class="btn-save">Guardar Proyecto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para servicios -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="serviceModalTitle">Nuevo Servicio</h3>
+                <span class="close-modal" onclick="closeModal('serviceModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="serviceForm">
+                    <input type="hidden" id="serviceId">
+                    
+                    <div class="form-group">
+                        <label for="serviceIcono">Icono del servicio</label>
+                        <select id="serviceIcono" class="form-control" required>
+                            <option value="fa-chart-line">📈 Marketing</option>
+                            <option value="fa-paint-brush">🎨 Diseño</option>
+                            <option value="fa-video">🎬 Video</option>
+                            <option value="fa-brain">🧠 Estrategia</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceTitulo">Nombre del servicio</label>
+                        <input type="text" id="serviceTitulo" class="form-control" required placeholder="Ej: Marketing Digital">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceDescripcion">Descripción</label>
+                        <textarea id="serviceDescripcion" rows="3" class="form-control" required placeholder="Descripción del servicio..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('serviceModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Servicio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para testimonios -->
+    <div id="testimonialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="testimonialModalTitle">Nuevo Testimonio</h3>
+                <span class="close-modal" onclick="closeModal('testimonialModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="testimonialForm">
+                    <input type="hidden" id="testimonialId">
+                    
+                    <div class="form-group">
+                        <label for="testimonialCliente">Nombre del cliente</label>
+                        <input type="text" id="testimonialCliente" class="form-control" required placeholder="Ej: Laura Méndez">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testimonialCargo">Cargo / Empresa</label>
+                        <input type="text" id="testimonialCargo" class="form-control" required placeholder="Ej: CMO de InnovaCorp">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testimonialTexto">Testimonio</label>
+                        <textarea id="testimonialTexto" rows="4" class="form-control" required placeholder="Escribe el testimonio..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('testimonialModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Testimonio</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Sobre Nosotros -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Información</h3>
+                <span class="close-modal" onclick="closeModal('aboutModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="aboutForm">
+                    <div class="form-group">
+                        <label for="aboutNombre">Nombre</label>
+                        <input type="text" id="aboutNombre" class="form-control" value="Eduardo Olsen" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aboutCargo">Cargo</label>
+                        <input type="text" id="aboutCargo" class="form-control" value="Fundador · Director Creativo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aboutBiografia">Biografía</label>
+                        <textarea id="aboutBiografia" rows="6" class="form-control" required>Con más de 15 años creando campañas para marcas globales, Eduardo lidera un equipo apasionado por contar historias que venden. Nuestra agencia nació para romper lo convencional: integramos marketing, diseño y video en experiencias memorables.</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aboutImagen">URL de imagen</label>
+                        <input type="url" id="aboutImagen" class="form-control" value="https://picsum.photos/id/64/400/400">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('aboutModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Cambios</button>
                     </div>
                 </form>
             </div>
@@ -157,22 +270,22 @@
                 <form id="configForm">
                     <div class="form-group">
                         <label>Nombre de la Agencia</label>
-                        <input type="text" id="agencyName" value="Eduardo Olsen Studio">
+                        <input type="text" id="agencyName" class="form-control" value="Eduardo Olsen Studio">
                     </div>
                     
                     <div class="form-group">
                         <label>Descripción</label>
-                        <textarea id="agencyDescription" rows="3">Marketing digital, diseño y video que venden</textarea>
+                        <textarea id="agencyDescription" rows="3" class="form-control">Marketing digital, diseño y video que venden</textarea>
                     </div>
                     
                     <div class="form-group">
                         <label>Email de contacto</label>
-                        <input type="email" id="agencyEmail" value="hola@eduardo-olsen.studio">
+                        <input type="email" id="agencyEmail" class="form-control" value="hola@eduardo-olsen.studio">
                     </div>
                     
                     <div class="form-group">
                         <label>Teléfono</label>
-                        <input type="text" id="agencyPhone" value="+506 8792 2758">
+                        <input type="text" id="agencyPhone" class="form-control" value="+506 8792 2758">
                     </div>
                     
                     <div class="form-actions">
@@ -190,7 +303,7 @@
         <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
         
-        <!-- Sidebar - IGUAL AL EJEMPLO DE CATERING -->
+        <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="logo">
                 <h2><i class="fas fa-camera-retro"></i> Eduardo Olsen</h2>
@@ -309,27 +422,27 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 40px;">
-                    <h3 style="margin-bottom: 20px; color: #0e1b3c;">Actividad reciente</h3>
-                    <div class="items-list">
-                        <div class="item-row">
-                            <div class="item-info">
-                                <h4>Nuevo mensaje de contacto</h4>
-                                <p>Cliente potencial interesado en servicios de video</p>
-                            </div>
-                            <div class="item-actions">
-                                <span style="color: #6b7280; font-size: 0.9rem;">Hace 10 min</span>
-                            </div>
+                <div class="activity-section">
+                    <h3><i class="fas fa-clock"></i> Actividad reciente</h3>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="item-row">
-                            <div class="item-info">
-                                <h4>Post publicado: "Tendencias 2025"</h4>
-                                <p>Blog de marketing</p>
-                            </div>
-                            <div class="item-actions">
-                                <span style="color: #6b7280; font-size: 0.9rem;">Hace 2 horas</span>
-                            </div>
+                        <div class="activity-content">
+                            <h4>Nuevo mensaje de contacto</h4>
+                            <p>Cliente potencial interesado en servicios de video</p>
                         </div>
+                        <div class="activity-time">Hace 10 min</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-blog"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h4>Post publicado: "Tendencias 2025"</h4>
+                            <p>Blog de marketing</p>
+                        </div>
+                        <div class="activity-time">Hace 2 horas</div>
                     </div>
                 </div>
             </div>
@@ -507,19 +620,19 @@
                 <div class="config-grid">
                     <div class="config-card">
                         <h3><i class="fas fa-envelope" style="color: #1e2b5e;"></i> Email</h3>
-                        <p style="font-size: 1.2rem; color: #1e2b5e;">hola@eduardo-olsen.studio</p>
+                        <p>hola@eduardo-olsen.studio</p>
                     </div>
                     <div class="config-card">
                         <h3><i class="fas fa-phone" style="color: #1e2b5e;"></i> Teléfono</h3>
-                        <p style="font-size: 1.2rem; color: #1e2b5e;">+506 8792 2758</p>
+                        <p>+506 8792 2758</p>
                     </div>
                     <div class="config-card">
                         <h3><i class="fas fa-map-marker-alt" style="color: #1e2b5e;"></i> Ubicación</h3>
-                        <p style="font-size: 1.2rem; color: #1e2b5e;">Costa Rica · Remoto</p>
+                        <p>Costa Rica · Remoto</p>
                     </div>
                     <div class="config-card">
                         <h3><i class="fas fa-globe" style="color: #1e2b5e;"></i> Redes Sociales</h3>
-                        <div style="display: flex; gap: 20px; font-size: 2rem;">
+                        <div class="social-links">
                             <i class="fab fa-linkedin" style="color: #0077b5;"></i>
                             <i class="fab fa-instagram" style="color: #e4405f;"></i>
                             <i class="fab fa-youtube" style="color: #ff0000;"></i>
@@ -569,12 +682,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Botón flotante para volver a dashboard -->
-    <button id="fabDashboard" class="fab-categorias" style="display: none;" onclick="switchSection('dashboard')">
-        <i class="fas fa-chart-pie"></i>
-        <span>Ir al Dashboard</span>
-    </button>
 
     <script src="js/dash.js"></script>
 </body>

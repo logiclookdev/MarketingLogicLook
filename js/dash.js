@@ -1,8 +1,8 @@
- // Variables
+ // ===== VARIABLES GLOBALES =====
         let currentSection = 'dashboard';
         let itemToDelete = null;
 
-        // Funciones del menú hamburguesa
+        // ===== FUNCIONES DEL MENÚ HAMBURGUESA =====
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -17,7 +17,7 @@
             overlay.classList.remove('active');
         }
 
-        // Cambiar entre secciones
+        // ===== CAMBIAR ENTRE SECCIONES =====
         function switchSection(section) {
             // Ocultar todas las secciones
             document.querySelectorAll('.content-section').forEach(el => {
@@ -46,15 +46,7 @@
             });
             const activeLink = document.getElementById('nav-' + section);
             if (activeLink) activeLink.classList.add('active');
-            
-            // Mostrar/ocultar botón flotante
-            const fab = document.getElementById('fabDashboard');
-            if (section !== 'dashboard') {
-                fab.style.display = 'flex';
-            } else {
-                fab.style.display = 'none';
-            }
-            
+
             // Cerrar sidebar en móvil
             if (window.innerWidth <= 900) {
                 closeSidebar();
@@ -63,10 +55,9 @@
             currentSection = section;
         }
 
-        // Funciones para modales
+        // ===== FUNCIONES PARA MODALES =====
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            showLoader(false);
         }
 
         function closeModal(modalId) {
@@ -83,7 +74,7 @@
             }
         }
 
-        // Blog Modal
+        // ===== MODAL PARA BLOG =====
         function openBlogModal(accion, id = null) {
             const modalTitle = document.getElementById('blogModalTitle');
             const form = document.getElementById('blogForm');
@@ -103,7 +94,7 @@
             openModal('blogModal');
         }
 
-        // Portfolio Modal
+        // ===== MODAL PARA PORTAFOLIO =====
         function openPortfolioModal(accion, id = null) {
             const modalTitle = document.getElementById('portfolioModalTitle');
             
@@ -121,61 +112,73 @@
             openModal('portfolioModal');
         }
 
-        // Service Modal (simulado)
+        // ===== MODAL PARA SERVICIOS =====
         function openServiceModal(accion, id = null) {
-            showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-                openInfoModal('Éxito', 'Funcionalidad en desarrollo');
-            }, 800);
+            const modalTitle = document.getElementById('serviceModalTitle');
+            
+            if (accion === 'nuevo') {
+                modalTitle.textContent = 'Nuevo Servicio';
+                document.getElementById('serviceForm').reset();
+                document.getElementById('serviceId').value = '';
+            } else {
+                modalTitle.textContent = 'Editar Servicio';
+                document.getElementById('serviceId').value = id;
+                document.getElementById('serviceTitulo').value = 'Marketing digital';
+                document.getElementById('serviceDescripcion').value = 'Estrategias data-driven, ads, social media';
+                document.getElementById('serviceIcono').value = 'fa-chart-line';
+            }
+            
+            openModal('serviceModal');
         }
 
-        // Testimonial Modal (simulado)
+        // ===== MODAL PARA TESTIMONIOS =====
         function openTestimonialModal(accion, id = null) {
-            showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-                openInfoModal('Éxito', 'Funcionalidad en desarrollo');
-            }, 800);
+            const modalTitle = document.getElementById('testimonialModalTitle');
+            
+            if (accion === 'nuevo') {
+                modalTitle.textContent = 'Nuevo Testimonio';
+                document.getElementById('testimonialForm').reset();
+                document.getElementById('testimonialId').value = '';
+            } else {
+                modalTitle.textContent = 'Editar Testimonio';
+                document.getElementById('testimonialId').value = id;
+                document.getElementById('testimonialCliente').value = 'Laura Méndez';
+                document.getElementById('testimonialCargo').value = 'CMO de InnovaCorp';
+                document.getElementById('testimonialTexto').value = 'Eduardo y su equipo transformaron nuestra presencia digital...';
+            }
+            
+            openModal('testimonialModal');
         }
 
-        // About Modal (simulado)
+        // ===== MODAL PARA SOBRE NOSOTROS =====
         function openAboutModal() {
-            showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-                openInfoModal('Éxito', 'Funcionalidad en desarrollo');
-            }, 800);
+            openModal('aboutModal');
         }
 
-        // Contact Modal (simulado)
+        // ===== MODAL PARA CONTACTO (usa configModal) =====
         function openContactModal() {
-            showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-                openInfoModal('Éxito', 'Funcionalidad en desarrollo');
-            }, 800);
+            openModal('configModal');
         }
 
-        // Config Modal
+        // ===== MODAL PARA CONFIGURACIÓN =====
         function openConfigModal() {
             openModal('configModal');
         }
 
-        // Delete Modal
+        // ===== MODAL PARA ELIMINAR =====
         function openDeleteModal(tipo, id) {
             itemToDelete = { type: tipo, id: id };
             openModal('deleteModal');
         }
 
-        // Info Modal
+        // ===== MODAL INFORMATIVO =====
         function openInfoModal(title, message) {
             document.getElementById('infoModalTitle').textContent = title;
             document.getElementById('infoModalMessage').textContent = message;
             openModal('infoModal');
         }
 
-        // Confirmar eliminación
+        // ===== CONFIRMAR ELIMINACIÓN =====
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             if(itemToDelete) {
                 closeModal('deleteModal');
@@ -184,7 +187,7 @@
             }
         });
 
-        // Logout
+        // ===== LOGOUT =====
         function logout() {
             showLoader(true);
             setTimeout(() => {
@@ -193,7 +196,7 @@
             }, 800);
         }
 
-        // Prevenir envío de formularios
+        // ===== PREVENIR ENVÍO DE FORMULARIOS =====
         document.querySelectorAll('form').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -202,7 +205,7 @@
             });
         });
 
-        // Cerrar modales con ESC
+        // ===== CERRAR MODALES CON TECLA ESC =====
         document.addEventListener('keydown', (e) => {
             if(e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.active, .modal.active').forEach(modal => {
@@ -212,12 +215,12 @@
             }
         });
 
-        // Cerrar sidebar al hacer resize
+        // ===== CERRAR SIDEBAR AL HACER RESIZE =====
         window.addEventListener('resize', () => {
             if(window.innerWidth > 900) {
                 closeSidebar();
             }
         });
 
-        // Inicializar
+        // ===== INICIALIZAR =====
         switchSection('dashboard');
