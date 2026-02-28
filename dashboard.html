@@ -2,721 +2,290 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin · Eduardo Olsen Studio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Dashboard · Eduardo Olsen Studio</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f7fc;
-            color: #121212;
-        }
-
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: #0b1126;
-            color: white;
-            padding: 32px 0;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar-header {
-            padding: 0 24px 32px;
-            border-bottom: 1px solid #1f284e;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sidebar-header .logo {
-            font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff, #a8b2da);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .sidebar-header p {
-            color: #a8b2da;
-            font-size: 0.9rem;
-            margin-top: 8px;
-        }
-
-        .sidebar-nav {
-            padding: 24px;
-        }
-
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            padding: 14px 20px;
-            color: #cfd6f0;
-            text-decoration: none;
-            border-radius: 12px;
-            margin-bottom: 6px;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-
-        .sidebar-nav a:hover,
-        .sidebar-nav a.active {
-            background: #1e274a;
-            color: white;
-        }
-
-        .sidebar-nav a i {
-            margin-right: 12px;
-            font-size: 1.2rem;
-            width: 24px;
-        }
-
-        /* Botón hamburguesa */
-        .menu-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            background: #1e2b5e;
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-toggle:hover {
-            background: #2b3b7a;
-        }
-
-        /* Overlay para móvil */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Main content */
-        .main-content {
-            flex: 1;
-            padding: 32px;
-            max-width: calc(100% - 280px);
-            transition: margin-left 0.3s ease;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            background: white;
-            padding: 20px 32px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        }
-
-        .top-bar h1 {
-            font-size: 1.8rem;
-            color: #0e1b3c;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        /* Botón de cerrar sesión más sutil */
-        .logout-btn {
-            background: transparent;
-            color: #6b7280;
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1.5px solid #e5e7eb;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logout-btn:hover {
-            background: #f9fafb;
-            color: #1e2b5e;
-            border-color: #1e2b5e;
-        }
-
-        /* Cards de estadísticas */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 28px;
-            border-radius: 24px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .stat-card h3 {
-            color: #4a4f6b;
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-card .number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #0e1b3c;
-            margin-bottom: 8px;
-        }
-
-        .stat-card .trend {
-            color: #10b981;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Secciones de edición */
-        .section-card {
-            background: white;
-            border-radius: 28px;
-            padding: 32px;
-            margin-bottom: 32px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.02);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 28px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #f0f3fe;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-            color: #0e1b3c;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .btn {
-            background: #1e2b5e;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .btn:hover {
-            background: #2b3b7a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30,43,94,0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #1e2b5e;
-            color: #1e2b5e;
-        }
-
-        .btn-outline:hover {
-            background: #1e2b5e;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-        }
-
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
-
-        /* Botones para blog - estilo mejorado */
-        .blog-post-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .blog-post-actions button {
-            padding: 8px 16px;
-            border-radius: 40px;
-            border: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .edit-btn {
-            background: #e9edfc;
-            color: #1e2b5e;
-        }
-
-        .edit-btn:hover {
-            background: #d0d9ff;
-            transform: translateY(-2px);
-        }
-
-        .delete-btn {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .delete-btn:hover {
-            background: #fecaca;
-            transform: translateY(-2px);
-        }
-
-        /* Tablas y listados */
-        .items-list {
-            display: grid;
-            gap: 16px;
-        }
-
-        .item-row {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 20px;
-            padding: 20px;
-            background: #f8faff;
-            border-radius: 20px;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .item-row:hover {
-            background: #f0f4ff;
-        }
-
-        .item-preview {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            overflow: hidden;
-            background: #e6eaf5;
-        }
-
-        .item-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .item-info h4 {
-            font-size: 1.1rem;
-            color: #0e1b3c;
-            margin-bottom: 6px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .item-info p {
-            color: #4a4f6b;
-            font-size: 0.9rem;
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        /* Formularios */
-        .edit-form {
-            display: none;
-            background: #f8faff;
-            padding: 28px;
-            border-radius: 24px;
-            margin-top: 20px;
-        }
-
-        .edit-form.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #0e1b3c;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 16px;
-            border: 2px solid #e6eaf5;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #1e2b5e;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 16px;
-            margin-top: 28px;
-        }
-
-        /* Blog posts grid */
-        .blog-posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .blog-post-card {
-            background: #f8faff;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .blog-post-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .blog-post-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .blog-post-content {
-            padding: 20px;
-        }
-
-        .blog-post-content h4 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #0e1b3c;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .blog-post-content .category {
-            color: #1e2b5e;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .blog-post-date {
-            color: #6b7280;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
-        }
-
-        /* Configuración */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .setting-item {
-            background: #f8faff;
-            padding: 24px;
-            border-radius: 20px;
-        }
-
-        .setting-item h3 {
-            margin-bottom: 20px;
-            color: #0e1b3c;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 32px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-        }
-
-        .modal-content h3 {
-            margin-bottom: 20px;
-            color: #0e1b3c;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 16px;
-            margin-top: 28px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .sidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                transform: translateX(-100%);
-                z-index: 1000;
-                width: 280px;
-                box-shadow: 2px 0 20px rgba(0,0,0,0.1);
-            }
-
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .main-content {
-                max-width: 100%;
-                padding: 20px;
-                padding-top: 80px;
-            }
-
-            .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-                padding: 16px 20px;
-            }
-
-            .top-bar h1 {
-                font-size: 1.5rem;
-            }
-
-            .logout-btn {
-                align-self: flex-end;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .item-row {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .item-preview {
-                margin: 0 auto;
-            }
-
-            .item-actions {
-                justify-content: center;
-            }
-
-            .blog-posts-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .section-header .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-content {
-                padding: 24px;
-                width: 95%;
-            }
-
-            .form-actions {
-                flex-direction: column;
-            }
-
-            .form-actions button {
-                width: 100%;
-            }
-
-            .blog-post-actions {
-                flex-direction: column;
-            }
-
-            .blog-post-actions button {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/dash.css">
 </head>
 <body>
-    <!-- Botón menú hamburguesa -->
-    <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">☰</button>
-    
-    <!-- Overlay para móvil -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <!-- Loader -->
+    <div id="loader" class="loader-container">
+        <div class="spinner"></div>
+        <p>Cargando, por favor espera...</p>
+    </div>
 
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div>
-                    <div class="logo">eduardo<span style="color: #7f8ed6;">olsen</span></div>
-                    <p>Panel de administración</p>
-                </div>
+    <!-- Modal confirmación para eliminar -->
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <i class="fa-solid fa-trash-can"></i>
             </div>
+            
+            <div class="modal-body">
+                <h3 id="deleteModalTitle">¿Eliminar este elemento?</h3>
+                <p id="deleteModalMessage">Esta acción no se puede deshacer. El ítem desaparecerá permanentemente.</p>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancelar</button>
+                <button class="btn-confirm danger" id="confirmDeleteBtn">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal informativo -->
+    <div id="infoModal" class="modal-overlay">
+        <div class="modal-card modal-info">
+            <div class="modal-icon" id="infoModalIcon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <div class="modal-body">
+                <h3 id="infoModalTitle">Éxito</h3>
+                <p id="infoModalMessage">Operación completada correctamente.</p>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-confirm" onclick="closeModal('infoModal')">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar blog post -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="blogModalTitle">Nuevo Post</h3>
+                <span class="close-modal" onclick="closeModal('blogModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="blogForm">
+                    <input type="hidden" id="blogPostId">
+                    
+                    <div class="form-group">
+                        <label for="blogTitulo">Título del post</label>
+                        <input type="text" id="blogTitulo" required placeholder="Ej: Tendencias de marketing 2025">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="blogCategoria">Categoría</label>
+                            <select id="blogCategoria" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Marketing">📈 Marketing</option>
+                                <option value="Diseño">🎨 Diseño</option>
+                                <option value="Video">🎬 Video</option>
+                                <option value="Estrategia">🧠 Estrategia</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="blogImagen">URL de imagen</label>
+                            <input type="url" id="blogImagen" placeholder="https://ejemplo.com/imagen.jpg">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="blogExtracto">Extracto</label>
+                        <textarea id="blogExtracto" rows="3" required placeholder="Breve descripción del post..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="blogContenido">Contenido</label>
+                        <textarea id="blogContenido" rows="6" placeholder="Contenido completo del artículo..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('blogModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar proyecto (portafolio) -->
+    <div id="portfolioModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="portfolioModalTitle">Nuevo Proyecto</h3>
+                <span class="close-modal" onclick="closeModal('portfolioModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="portfolioForm">
+                    <input type="hidden" id="portfolioId">
+                    
+                    <div class="form-group">
+                        <label for="portfolioTitulo">Título del proyecto</label>
+                        <input type="text" id="portfolioTitulo" required placeholder="Ej: Campaña Digital - Nike">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="portfolioDescripcion">Descripción</label>
+                        <textarea id="portfolioDescripcion" rows="3" required placeholder="Breve descripción del proyecto..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="portfolioImagen">URL de imagen</label>
+                        <input type="url" id="portfolioImagen" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('portfolioModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Proyecto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para configuración general -->
+    <div id="configModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Configuración General</h3>
+                <span class="close-modal" onclick="closeModal('configModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="configForm">
+                    <div class="form-group">
+                        <label>Nombre de la Agencia</label>
+                        <input type="text" id="agencyName" value="Eduardo Olsen Studio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="agencyDescription" rows="3">Marketing digital, diseño y video que venden</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email de contacto</label>
+                        <input type="email" id="agencyEmail" value="hola@eduardo-olsen.studio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" id="agencyPhone" value="+506 8792 2758">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="closeModal('configModal')">Cancelar</button>
+                        <button type="submit" class="btn-save">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+        
+        <!-- Sidebar - IGUAL AL EJEMPLO DE CATERING -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-camera-retro"></i> Eduardo Olsen</h2>
+                <p class="restaurant-subtitle">Estudio Creativo</p>
+            </div>
+            
             <nav class="sidebar-nav">
-                <a href="#dashboard" class="active" onclick="showSection('dashboard'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>📊</i> Dashboard
-                </a>
-                <a href="#blog" onclick="showSection('blog'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>📝</i> Blog
-                </a>
-                <a href="#portfolio" onclick="showSection('portfolio'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>🖼️</i> Portafolio
-                </a>
-                <a href="#services" onclick="showSection('services'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>⚙️</i> Servicios
-                </a>
-                <a href="#testimonials" onclick="showSection('testimonials'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>💬</i> Testimonios
-                </a>
-                <a href="#about" onclick="showSection('about'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>👤</i> Sobre Nosotros
-                </a>
-                <a href="#contact" onclick="showSection('contact'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>📧</i> Contacto
-                </a>
-                <a href="#settings" onclick="showSection('settings'); if(window.innerWidth <= 900) closeSidebar();">
-                    <i>⚙️</i> Configuración
-                </a>
+                <div class="sidebar-section-title">SECCIONES PRINCIPALES</div>
+                <ul id="mainNav">
+                    <li>
+                        <a href="#" onclick="switchSection('dashboard'); return false;" class="active" id="nav-dashboard">
+                            <i class="fas fa-chart-pie"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchSection('blog'); return false;" id="nav-blog">
+                            <i class="fas fa-blog"></i> Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchSection('portfolio'); return false;" id="nav-portfolio">
+                            <i class="fas fa-briefcase"></i> Portafolio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchSection('services'); return false;" id="nav-services">
+                            <i class="fas fa-cog"></i> Servicios
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-section-title">CONTENIDO</div>
+                <ul>
+                    <li>
+                        <a href="#" onclick="switchSection('testimonials'); return false;" id="nav-testimonials">
+                            <i class="fas fa-star"></i> Testimonios
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchSection('about'); return false;" id="nav-about">
+                            <i class="fas fa-user-tie"></i> Sobre Nosotros
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchSection('contact'); return false;" id="nav-contact">
+                            <i class="fas fa-envelope"></i> Contacto
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-divider"></div>
+
+                <div class="sidebar-section-title">ADMINISTRACIÓN</div>
+                <ul>
+                    <li>
+                        <a href="#" onclick="switchSection('config'); return false;" id="nav-config">
+                            <i class="fas fa-sliders-h"></i> Configuración
+                        </a>
+                    </li>
+                </ul>
             </nav>
-        </aside>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <p class="user-name">Eduardo Olsen</p>
+                        <p class="user-role">Director Creativo</p>
+                    </div>
+                </div>
+                <a href="javascript:void(0)" id="logoutBtn" class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <div class="top-bar">
-                <h1 id="sectionTitle">Dashboard</h1>
-                <button class="logout-btn" onclick="logout()">
-                    <span>👋</span> Cerrar sesión
+        <div class="main-content">
+             
+            <header class="top-bar">
+                <button id="menuToggle" class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
                 </button>
-            </div>
+                
+                <h1 id="sectionTitle">Dashboard</h1>
+                
+                <div class="header-actions">
+                    <button id="configBtn" class="btn-save" style="display: none;" onclick="openConfigModal()">
+                        <i class="fas fa-cog"></i> Configuración
+                    </button>
+                </div>
+            </header>
 
             <!-- Dashboard Section -->
-            <div id="dashboard-section" class="section-card">
+            <div id="dashboardSection" class="content-section active">
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Visitas este mes</h3>
@@ -766,83 +335,48 @@
             </div>
 
             <!-- Blog Section -->
-            <div id="blog-section" class="section-card" style="display: none;">
+            <div id="blogSection" class="content-section">
                 <div class="section-header">
-                    <h2>Gestionar Blog</h2>
-                    <button class="btn" onclick="showNewPostForm()">+ Nuevo post</button>
+                    <h2><i class="fas fa-blog"></i> Gestionar Blog</h2>
+                    <button class="btn-add-item" onclick="openBlogModal('nuevo')">
+                        <i class="fas fa-plus"></i> Nuevo Post
+                    </button>
                 </div>
 
-                <!-- Formulario nuevo post -->
-                <div id="newPostForm" class="edit-form">
-                    <h3 style="margin-bottom: 20px;">Crear nuevo post</h3>
-                    <div class="form-group">
-                        <label>Título</label>
-                        <input type="text" id="postTitle" placeholder="Ej: Tendencias de marketing 2025">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Categoría</label>
-                            <select id="postCategory">
-                                <option>Marketing</option>
-                                <option>Diseño</option>
-                                <option>Video</option>
-                                <option>Estrategia Digital</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Imagen destacada</label>
-                            <input type="file" accept="image/*">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Extracto</label>
-                        <textarea id="postExcerpt" rows="3" placeholder="Breve descripción del post..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Contenido</label>
-                        <textarea id="postContent" rows="6" placeholder="Contenido completo del artículo..."></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" onclick="savePost()">Publicar</button>
-                        <button class="btn btn-outline" onclick="hideNewPostForm()">Cancelar</button>
-                    </div>
-                </div>
-
-                <!-- Lista de posts -->
                 <div class="blog-posts-grid">
                     <div class="blog-post-card">
-                        <img src="https://picsum.photos/id/0/400/300" alt="blog post" loading="lazy">
+                        <img src="https://picsum.photos/id/0/400/300" alt="blog post">
                         <div class="blog-post-content">
                             <span class="category">Marketing</span>
                             <h4>Tendencias 2025 en video marketing</h4>
-                            <div class="blog-post-date">📅 15 Feb 2025</div>
+                            <div class="blog-post-date"><i class="far fa-calendar"></i> 15 Feb 2025</div>
                             <div class="blog-post-actions">
-                                <button class="edit-btn" onclick="editPost(1)">✏️ Editar</button>
-                                <button class="delete-btn" onclick="deletePost(1)">🗑️ Eliminar</button>
+                                <button class="edit-btn" onclick="openBlogModal('editar', 1)"><i class="fas fa-edit"></i> Editar</button>
+                                <button class="delete-btn" onclick="openDeleteModal('post', 1)"><i class="fas fa-trash"></i> Eliminar</button>
                             </div>
                         </div>
                     </div>
                     <div class="blog-post-card">
-                        <img src="https://picsum.photos/id/42/400/300" alt="blog post" loading="lazy">
+                        <img src="https://picsum.photos/id/42/400/300" alt="blog post">
                         <div class="blog-post-content">
                             <span class="category">Diseño</span>
                             <h4>Psicología del color en branding</h4>
-                            <div class="blog-post-date">📅 10 Feb 2025</div>
+                            <div class="blog-post-date"><i class="far fa-calendar"></i> 10 Feb 2025</div>
                             <div class="blog-post-actions">
-                                <button class="edit-btn" onclick="editPost(2)">✏️ Editar</button>
-                                <button class="delete-btn" onclick="deletePost(2)">🗑️ Eliminar</button>
+                                <button class="edit-btn" onclick="openBlogModal('editar', 2)"><i class="fas fa-edit"></i> Editar</button>
+                                <button class="delete-btn" onclick="openDeleteModal('post', 2)"><i class="fas fa-trash"></i> Eliminar</button>
                             </div>
                         </div>
                     </div>
                     <div class="blog-post-card">
-                        <img src="https://picsum.photos/id/104/400/300" alt="blog post" loading="lazy">
+                        <img src="https://picsum.photos/id/104/400/300" alt="blog post">
                         <div class="blog-post-content">
                             <span class="category">Video</span>
                             <h4>Reels que enganchan: nueva fórmula</h4>
-                            <div class="blog-post-date">📅 5 Feb 2025</div>
+                            <div class="blog-post-date"><i class="far fa-calendar"></i> 5 Feb 2025</div>
                             <div class="blog-post-actions">
-                                <button class="edit-btn" onclick="editPost(3)">✏️ Editar</button>
-                                <button class="delete-btn" onclick="deletePost(3)">🗑️ Eliminar</button>
+                                <button class="edit-btn" onclick="openBlogModal('editar', 3)"><i class="fas fa-edit"></i> Editar</button>
+                                <button class="delete-btn" onclick="openDeleteModal('post', 3)"><i class="fas fa-trash"></i> Eliminar</button>
                             </div>
                         </div>
                     </div>
@@ -850,10 +384,12 @@
             </div>
 
             <!-- Portfolio Section -->
-            <div id="portfolio-section" class="section-card" style="display: none;">
+            <div id="portfolioSection" class="content-section">
                 <div class="section-header">
-                    <h2>Gestionar Portafolio</h2>
-                    <button class="btn" onclick="showNewPortfolioItem()">+ Nuevo proyecto</button>
+                    <h2><i class="fas fa-briefcase"></i> Gestionar Portafolio</h2>
+                    <button class="btn-add-item" onclick="openPortfolioModal('nuevo')">
+                        <i class="fas fa-plus"></i> Nuevo Proyecto
+                    </button>
                 </div>
 
                 <div class="items-list">
@@ -862,12 +398,12 @@
                             <img src="https://picsum.photos/id/20/100/100" alt="proyecto">
                         </div>
                         <div class="item-info">
-                            <h4>Campaña Digital - Marca de moda</h4>
+                            <h4>Campaña Digital - Nike</h4>
                             <p>Campaña integral de marketing digital</p>
                         </div>
                         <div class="item-actions">
-                            <button class="edit-btn btn-small" onclick="editPortfolioItem(1)">✏️ Editar</button>
-                            <button class="delete-btn btn-small" onclick="deletePortfolioItem(1)">🗑️ Eliminar</button>
+                            <button class="edit-btn" onclick="openPortfolioModal('editar', 1)"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="delete-btn" onclick="openDeleteModal('portfolio', 1)"><i class="fas fa-trash"></i> Eliminar</button>
                         </div>
                     </div>
                     <div class="item-row">
@@ -879,47 +415,51 @@
                             <p>Comercial para televisión nacional</p>
                         </div>
                         <div class="item-actions">
-                            <button class="edit-btn btn-small" onclick="editPortfolioItem(2)">✏️ Editar</button>
-                            <button class="delete-btn btn-small" onclick="deletePortfolioItem(2)">🗑️ Eliminar</button>
+                            <button class="edit-btn" onclick="openPortfolioModal('editar', 2)"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="delete-btn" onclick="openDeleteModal('portfolio', 2)"><i class="fas fa-trash"></i> Eliminar</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Services Section -->
-            <div id="services-section" class="section-card" style="display: none;">
+            <div id="servicesSection" class="content-section">
                 <div class="section-header">
-                    <h2>Editar Servicios</h2>
-                    <button class="btn">+ Agregar servicio</button>
+                    <h2><i class="fas fa-cog"></i> Editar Servicios</h2>
+                    <button class="btn-add-item" onclick="openServiceModal('nuevo')">
+                        <i class="fas fa-plus"></i> Nuevo Servicio
+                    </button>
                 </div>
 
                 <div class="items-list">
                     <div class="item-row">
                         <div class="item-info">
-                            <h4>📈 Marketing digital</h4>
+                            <h4><i class="fas fa-chart-line" style="color: #1e2b5e; margin-right: 10px;"></i> Marketing digital</h4>
                             <p>Estrategias data-driven, ads, social media</p>
                         </div>
                         <div class="item-actions">
-                            <button class="edit-btn btn-small">✏️ Editar</button>
+                            <button class="edit-btn" onclick="openServiceModal('editar', 1)"><i class="fas fa-edit"></i> Editar</button>
                         </div>
                     </div>
                     <div class="item-row">
                         <div class="item-info">
-                            <h4>🎨 Diseño gráfico</h4>
+                            <h4><i class="fas fa-paint-brush" style="color: #1e2b5e; margin-right: 10px;"></i> Diseño gráfico</h4>
                             <p>Identidad visual, branding, piezas digitales</p>
                         </div>
                         <div class="item-actions">
-                            <button class="edit-btn btn-small">✏️ Editar</button>
+                            <button class="edit-btn" onclick="openServiceModal('editar', 2)"><i class="fas fa-edit"></i> Editar</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Testimonials Section -->
-            <div id="testimonials-section" class="section-card" style="display: none;">
+            <div id="testimonialsSection" class="content-section">
                 <div class="section-header">
-                    <h2>Testimonios</h2>
-                    <button class="btn">+ Nuevo testimonio</button>
+                    <h2><i class="fas fa-star"></i> Testimonios</h2>
+                    <button class="btn-add-item" onclick="openTestimonialModal('nuevo')">
+                        <i class="fas fa-plus"></i> Nuevo Testimonio
+                    </button>
                 </div>
 
                 <div class="items-list">
@@ -929,251 +469,113 @@
                             <p>"Eduardo y su equipo transformaron nuestra presencia digital..."</p>
                         </div>
                         <div class="item-actions">
-                            <button class="edit-btn btn-small">✏️ Editar</button>
-                            <button class="delete-btn btn-small">🗑️ Eliminar</button>
+                            <button class="edit-btn" onclick="openTestimonialModal('editar', 1)"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="delete-btn" onclick="openDeleteModal('testimonial', 1)"><i class="fas fa-trash"></i> Eliminar</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- About Section -->
-            <div id="about-section" class="section-card" style="display: none;">
+            <div id="aboutSection" class="content-section">
                 <div class="section-header">
-                    <h2>Sobre Nosotros</h2>
+                    <h2><i class="fas fa-user-tie"></i> Sobre Nosotros</h2>
+                    <button class="btn-add-item" onclick="openAboutModal()">
+                        <i class="fas fa-edit"></i> Editar Información
+                    </button>
                 </div>
 
-                <div class="form-group">
-                    <label>Biografía de Eduardo Olsen</label>
-                    <textarea rows="6">Con más de 15 años creando campañas para marcas globales, Eduardo lidera un equipo apasionado por contar historias que venden...</textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Imagen de perfil</label>
-                    <input type="file" accept="image/*">
-                </div>
-
-                <div class="form-actions">
-                    <button class="btn">Guardar cambios</button>
+                <div style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap; background: #f8faff; padding: 32px; border-radius: 24px;">
+                    <img src="https://picsum.photos/id/64/150/150" alt="Eduardo Olsen" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+                    <div style="flex: 1;">
+                        <h3 style="margin-bottom: 8px; color: #0e1b3c; font-size: 1.8rem;">Eduardo Olsen</h3>
+                        <p style="color: #1e2b5e; font-weight: 500; margin-bottom: 16px;">Fundador · Director Creativo</p>
+                        <p style="color: #4b5563; line-height: 1.6;">Con más de 15 años creando campañas para marcas globales, Eduardo lidera un equipo apasionado por contar historias que venden. Nuestra agencia nació para romper lo convencional: integramos marketing, diseño y video en experiencias memorables.</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Contact Section -->
-            <div id="contact-section" class="section-card" style="display: none;">
+            <div id="contactSection" class="content-section">
                 <div class="section-header">
-                    <h2>Información de Contacto</h2>
+                    <h2><i class="fas fa-envelope"></i> Información de Contacto</h2>
+                    <button class="btn-add-item" onclick="openContactModal()">
+                        <i class="fas fa-edit"></i> Editar Contacto
+                    </button>
                 </div>
 
-                <div class="settings-grid">
-                    <div class="setting-item">
-                        <h3>Email</h3>
-                        <input type="email" value="olsen@logiclookcr.com" class="form-group" style="width: 100%;">
+                <div class="config-grid">
+                    <div class="config-card">
+                        <h3><i class="fas fa-envelope" style="color: #1e2b5e;"></i> Email</h3>
+                        <p style="font-size: 1.2rem; color: #1e2b5e;">hola@eduardo-olsen.studio</p>
                     </div>
-                    <div class="setting-item">
-                        <h3>Teléfono</h3>
-                        <input type="text" value="+506 87922758" class="form-group" style="width: 100%;">
+                    <div class="config-card">
+                        <h3><i class="fas fa-phone" style="color: #1e2b5e;"></i> Teléfono</h3>
+                        <p style="font-size: 1.2rem; color: #1e2b5e;">+506 8792 2758</p>
                     </div>
-                    <div class="setting-item">
-                        <h3>Ubicación</h3>
-                        <input type="text" value="Costa Rica · remoto" class="form-group" style="width: 100%;">
+                    <div class="config-card">
+                        <h3><i class="fas fa-map-marker-alt" style="color: #1e2b5e;"></i> Ubicación</h3>
+                        <p style="font-size: 1.2rem; color: #1e2b5e;">Costa Rica · Remoto</p>
                     </div>
-                    <div class="setting-item">
-                        <h3>Redes Sociales</h3>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <input type="text" placeholder="LinkedIn" value="#" style="width: 100%; margin-bottom: 10px;">
-                            <input type="text" placeholder="Instagram" value="#" style="width: 100%; margin-bottom: 10px;">
-                            <input type="text" placeholder="YouTube" value="#" style="width: 100%;">
+                    <div class="config-card">
+                        <h3><i class="fas fa-globe" style="color: #1e2b5e;"></i> Redes Sociales</h3>
+                        <div style="display: flex; gap: 20px; font-size: 2rem;">
+                            <i class="fab fa-linkedin" style="color: #0077b5;"></i>
+                            <i class="fab fa-instagram" style="color: #e4405f;"></i>
+                            <i class="fab fa-youtube" style="color: #ff0000;"></i>
+                            <i class="fab fa-behance" style="color: #1769ff;"></i>
                         </div>
                     </div>
-                </div>
-                <div class="form-actions" style="margin-top: 24px;">
-                    <button class="btn">Guardar cambios</button>
                 </div>
             </div>
 
-            <!-- Settings Section -->
-            <div id="settings-section" class="section-card" style="display: none;">
-                <div class="section-header">
-                    <h2>Configuración</h2>
-                </div>
-
-                <div class="settings-grid">
-                    <div class="setting-item">
-                        <h3>Cambiar contraseña</h3>
-                        <div class="form-group">
-                            <input type="password" placeholder="Contraseña actual">
+            <!-- Config Section -->
+            <div id="configSection" class="content-section">
+                <div class="config-container">
+                    <h2 style="margin-bottom: 24px;"><i class="fas fa-cog"></i> Configuración General</h2>
+                    
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <h3><i class="fas fa-store"></i> Información del Estudio</h3>
+                            <div class="form-group">
+                                <label>Nombre de la Agencia</label>
+                                <input type="text" value="Eduardo Olsen Studio" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <textarea rows="3" class="form-control">Marketing digital, diseño y video que venden</textarea>
+                            </div>
+                            <button class="btn-save" onclick="openConfigModal()">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Nueva contraseña">
+                        
+                        <div class="config-card">
+                            <h3><i class="fas fa-user-shield"></i> Seguridad</h3>
+                            <div class="form-group">
+                                <label>Cambiar Contraseña</label>
+                                <input type="password" placeholder="Nueva contraseña" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar Contraseña</label>
+                                <input type="password" placeholder="Confirmar contraseña" class="form-control">
+                            </div>
+                            <button class="btn-save">
+                                <i class="fas fa-save"></i> Actualizar
+                            </button>
                         </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Confirmar contraseña">
-                        </div>
-                        <button class="btn">Actualizar</button>
                     </div>
-
-                    <div class="setting-item">
-                        <h3>SEO / Meta datos</h3>
-                        <div class="form-group">
-                            <label>Título del sitio</label>
-                            <input type="text" value="Eduardo Olsen · Agencia creativa">
-                        </div>
-                        <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea rows="3">Marketing digital, diseño y video que venden</textarea>
-                        </div>
-                        <button class="btn">Guardar SEO</button>
-                    </div>
                 </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Modal de confirmación -->
-    <div class="modal" id="confirmModal">
-        <div class="modal-content">
-            <h3>Confirmar eliminación</h3>
-            <p>¿Estás seguro de que quieres eliminar este elemento? Esta acción no se puede deshacer.</p>
-            <div class="modal-actions">
-                <button class="btn btn-danger" onclick="confirmDelete()">Eliminar</button>
-                <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // Variables
-        let itemToDelete = null;
+    <!-- Botón flotante para volver a dashboard -->
+    <button id="fabDashboard" class="fab-categorias" style="display: none;" onclick="switchSection('dashboard')">
+        <i class="fas fa-chart-pie"></i>
+        <span>Ir al Dashboard</span>
+    </button>
 
-        // Funciones del menú hamburguesa
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
-        // Navegación entre secciones
-        function showSection(section) {
-            // Ocultar todas las secciones
-            document.querySelectorAll('.section-card').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // Mostrar la sección seleccionada
-            document.getElementById(section + '-section').style.display = 'block';
-            
-            // Actualizar título
-            const titles = {
-                'dashboard': 'Dashboard',
-                'blog': 'Gestión del Blog',
-                'portfolio': 'Portafolio',
-                'services': 'Servicios',
-                'testimonials': 'Testimonios',
-                'about': 'Sobre Nosotros',
-                'contact': 'Contacto',
-                'settings': 'Configuración'
-            };
-            document.getElementById('sectionTitle').textContent = titles[section];
-            
-            // Actualizar active en sidebar
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.classList.remove('active');
-                if(link.getAttribute('href') === '#' + section) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Blog functions
-        function showNewPostForm() {
-            document.getElementById('newPostForm').classList.add('active');
-        }
-
-        function hideNewPostForm() {
-            document.getElementById('newPostForm').classList.remove('active');
-        }
-
-        function savePost() {
-            const title = document.getElementById('postTitle').value;
-            const category = document.getElementById('postCategory').value;
-            const excerpt = document.getElementById('postExcerpt').value;
-            
-            if(title && category && excerpt) {
-                alert('✅ Post guardado correctamente');
-                hideNewPostForm();
-                // Aquí iría la lógica para guardar realmente
-            } else {
-                alert('❌ Por favor completa todos los campos');
-            }
-        }
-
-        function editPost(id) {
-            alert('Editando post #' + id);
-            showNewPostForm();
-        }
-
-        // Portfolio functions
-        function showNewPortfolioItem() {
-            alert('Funcionalidad: Nuevo proyecto');
-        }
-
-        function editPortfolioItem(id) {
-            alert('Editando proyecto #' + id);
-        }
-
-        // Delete confirmation
-        function deletePost(id) {
-            itemToDelete = { type: 'post', id: id };
-            document.getElementById('confirmModal').classList.add('active');
-        }
-
-        function deletePortfolioItem(id) {
-            itemToDelete = { type: 'portfolio', id: id };
-            document.getElementById('confirmModal').classList.add('active');
-        }
-
-        function confirmDelete() {
-            if(itemToDelete) {
-                alert(`✅ Elemento ${itemToDelete.type} #${itemToDelete.id} eliminado`);
-                closeModal();
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('confirmModal').classList.remove('active');
-            itemToDelete = null;
-        }
-
-        function logout() {
-            if(confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Cerrar modal con ESC
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape') {
-                closeModal();
-                closeSidebar();
-            }
-        });
-
-        // Cerrar sidebar al hacer resize si estamos en desktop
-        window.addEventListener('resize', () => {
-            if(window.innerWidth > 900) {
-                closeSidebar();
-            }
-        });
-
-        // Mostrar dashboard por defecto
-        showSection('dashboard');
-    </script>
+    <script src="js/dash.js"></script>
 </body>
 </html>
